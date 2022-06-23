@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;700&display=swap" rel="stylesheet">
+
+  <title>Frontend Mentor | Interactive rating component</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    .attribution {
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .attribution a {
+      color: hsl(228, 45%, 44%);
+    }
+
+    body {
+      background-color: black;
+      font-family: 'Overpass', sans-serif;
+    }
+
+    .rating_box {
+      background-color: #181E27;
+      width: 400px;
+      padding: 30px;
+      border-radius: 20px;
+
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    @media only screen and (max-width: 800px) {
+      .rating_box {
+        width: 300px;
+      }
+    }
+
+    .dot {
+      height: 25px;
+      width: 25px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      line-height: 25px;
+    }
+
+    .circle {
+      width: 45px;
+      height: 45px;
+      line-height: 50px;
+      border-radius: 50%;
+      font-size: 16px;
+
+      background: #262E38;
+      color: #969FAD;
+      text-align: center;
+      display: inline-block;
+      padding: 5px;
+    }
+
+    /* .onHover:hover {
+      background: #7C8798 !important;
+      color: white !important;
+    } */
+
+    /* .onHover:active {
+      background: #FC7614 !important;
+      color: white ;
+    } */
+
+    .mainText {
+      color: white;
+      margin-top: 1em;
+      font-weight: bold;
+      font-size: 28px;
+    }
+
+    .bottomText {
+      color: #969FAD;
+      margin-top: 4px;
+    }
+
+    .circles {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1px;
+
+    }
+
+    .submit {
+      display: block;
+      margin-top: 3px;
+      font-family: 'Overpass', sans-serif;
+      background-color: #FC7614;
+      border: none;
+      border-radius: 20px;
+      width: 100%;
+      color: white;
+      padding: 10px;
+    }
+
+    .onSubmitHover:hover {
+      color: #FC7614;
+      background-color: white;
+    }
+
+    .selectionLevel {
+      color: #FC7614;
+      background-color: #262E38;
+      font-size: 14px;
+      padding: 10px;
+      padding-top: 12px;
+      border-radius: 30px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="rating_box">
+
+    <div id="survey">
+      <span class="circle" style="display: block"><img style="width: 50%; height: auto; margin-top: 12px"
+          src="./images/icon-star.svg" /></span>
+
+      <p class="mainText">How did we do?</p>
+
+      <p class="bottomText">Please let us know how we did with your support request. All feedback is appreciated
+        to help us improve our offering! </p>
+
+
+      <div id="circles" class="circles">
+        <span class="circle" onclick="changeTheVariable()">1</span>
+        <span class="circle" onclick="changeTheVariable()">2</span>
+        <span class="circle" onclick="changeTheVariable()">3</span>
+        <span class="circle" onclick="changeTheVariable()">4</span>
+        <span class="circle" onclick="changeTheVariable()">5</span>
+      </div>
+
+      <div style="margin-top: 25px">
+        <button class="submit onSubmitHover" onclick="clickSubmit()"> SUBMIT</button>
+      </div>
+
+    </div>
+
+    <div id="confirmation">
+      <div>
+        <img src="./images/illustration-thank-you.svg" style="display: block; margin: auto" />
+        <br>
+        <span class="selectionLevel" style="display: block; margin: auto; width: 60%; text-align: center">You selected
+          <span id="rating"></span> out of 5</span>
+      </div>
+
+
+      <p class="mainText" style="text-align: center">Thank You!</p>
+      <p class="bottomText" style="text-align: center">We appreciate you taking the time to give a rating. If you ever
+        need more support, don’t
+        hesitate to get in touch!</p>
+
+    </div>
+
+
+
+
+  </div>
+
+  <script>
+    document.getElementById("survey").style.display = "inline";
+    document.getElementById("confirmation").style.display = "none";
+
+    function normalSetting() {
+      cols = document.getElementById("circles").childNodes;
+      for (i = 1; i <= 9; i++) {
+        if (i % 2 == 1) {
+
+          cols[i].style.backgroundColor = "#262E38";
+          cols[i].style.color = "#969FAD";
+          cols[i].onmouseover = function (e) {
+            e.target.style.backgroundColor = "#7C8798"
+            e.target.style.color = "white"
+          };
+          cols[i].onmouseout = function (e) {
+            e.target.style.backgroundColor = "#262E38"
+            e.target.style.color = "#969FAD";
+          };
+        }
+      }
+    }
+
+    normalSetting();
+
+    var a = 0;
+    document.getElementById("rating").innerHTML = a;
+
+    function changeTheVariable() {
+      a = event.target.innerText;
+      console.log(a);
+      document.getElementById("rating").innerHTML = a;
+
+      cols = document.getElementById("circles").childNodes;
+
+      normalSetting();
+
+      event.target.style.backgroundColor = "#FC7614";
+      event.target.style.color = "white";
+      event.target.onmouseout = function (e) {
+
+      }
+      event.target.onmouseover = function (e) {
+
+      }
+
+
+
+      // for (i = 1; i <= 9; i++) {
+      //   if (i % 2 == 1) {
+      //     cols[i].style.backgroundColor = "#262E38";
+      //     cols[i].style.color = "#969FAD";
+
+      //     // cols[i].onmouseover = function (e) {
+      //     //   e.target.style.backgroundColor = "#7C8798"
+      //     //   e.target.style.color = "white"
+      //     // };
+      //     // cols[i].onmouseout = function (e) {
+      //     //   e.target.style.backgroundColor = "#262E38"
+      //     //   e.target.style.color = "#969FAD";
+      //     // };
+      //   }
+      // }
+
+      // }
+
+      // event.onmouseout = function (e) {
+      // }
+      // event.onmouseover = function (e) {
+      // }
+
+
+    }
+    function clickSubmit() {
+      if (1 <= a && a <= 5) {
+        // console.log(a)
+        document.getElementById("survey").style.display = "none";
+        document.getElementById("confirmation").style.display = "inline";
+
+      }
+    }
+
+  </script>
+</body>
+
+</html>
